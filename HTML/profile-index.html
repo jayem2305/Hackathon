@@ -19,8 +19,11 @@
 
       window.onload = () => {
         pages.forEach((page) => preloadContent(page));
-
         document.body.classList.add("loaded");
+        if (currentPage != "preload/dashboard.html") {
+          document.body.classList.add("loaded");
+          loadContent("preload/dashboard.html");
+        }
       };
 
       function preloadContent(page) {
