@@ -44,6 +44,10 @@ body {
 .cert-cont {
   overflow: auto;
   height: 100vh;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
 }
 /* Sidebar */
 .sidebar {
@@ -312,15 +316,19 @@ body {
 .research-output h5 {
   text-align: end;
 }
-
+.itcert {
+  margin-bottom: 20px;
+}
 .container-cert {
   background: white;
   border-radius: 10px;
   padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 915px;
+  width: 100%;
   display: flex;
+
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .section-title {
@@ -331,9 +339,10 @@ body {
 
 .certificate-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  max-width: 100%;
+  column-gap: 20px;
+  grid-template-columns: repeat(4, auto); /* Let items size naturally */
+  justify-content: space-between; /* Creates space between items */
+  row-gap: 20px; /* Row spacing */
 }
 
 .certificate-card {
@@ -343,7 +352,7 @@ body {
   padding: 15px;
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 280px;
+  width: auto;
 }
 
 .certificate-header {
@@ -405,6 +414,7 @@ body {
 .frame {
   border: 1px solid #dee2e6;
   border-radius: 5px;
+  width: 100%;
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

@@ -183,7 +183,8 @@ body {
 }
 .right {
   padding: 20px;
-  margin-right: 20px;
+
+  overflow-y: scroll;
 }
 .submission-status {
   border: 1px solid rgb(223, 223, 223);
@@ -194,6 +195,8 @@ body {
 .content-main-cont {
   display: flex;
   width: auto;
+  height: 100vh;
+  overflow-y: scroll;
 }
 .submission-col {
   background-color: #898989;
