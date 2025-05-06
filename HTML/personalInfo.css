@@ -137,3 +137,13 @@
   width: 100%;
   margin-right: 20px;
 }
+.address {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; /* spacing between fields */
+}
+.address input {
+  flex: 1 1 calc(50% - 20px); /* 2 per row with 20px gap */
+  min-width: 200px;
+}
