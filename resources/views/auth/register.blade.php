@@ -72,9 +72,10 @@
                 <li>
                     <p class="text-secondary navicon">Verification and Approval</p>
                 </li>
-                <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Approval of Submision</a></li>
-                <li><a href="#portfolio"><i class="bi bi-shield-check navicon"></i> Tracking of Liscenses</a></li>
-                <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Audit logs</a></li>
+                <li><a href="/certificate"><i class="bi bi-file-earmark-text navicon"></i> Approval of Submision</a>
+                </li>
+                <li><a href="/track"><i class="bi bi-shield-check navicon"></i> Tracking of Liscenses</a></li>
+                <li><a href="/audit"><i class="bi bi-hdd-stack navicon"></i> Audit logs</a></li>
                 <!--<li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i
                             class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
@@ -95,12 +96,16 @@
                     </ul>
                 </li>-->
                 <li>
-                    <a href="#contact" class="text-danger text-decoration-none" style="transition: color 0.3s;"
-                        onmouseover="this.style.color='#ff0000'" onmouseout="this.style.color=''">
-                        <i class="bi bi-door-open navicon"></i> Logout
-                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                        onsubmit="return confirmLogout()">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-danger text-decoration-none p-0"
+                            style="transition: color 0.3s;" onmouseover="this.style.color='#ff0000'"
+                            onmouseout="this.style.color=''">
+                            <i class="bi bi-door-open navicon"></i> Logout
+                        </button>
+                    </form>
                 </li>
-
                 </li>
             </ul>
         </nav>

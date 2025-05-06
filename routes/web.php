@@ -7,6 +7,11 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\AdminController;
 // Show login form
+use App\Http\Controllers\AuditLogController;
+
+Route::get('/audit-logs', [AuditLogController::class, 'index'])->middleware('auth');
+
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 // Handle login
@@ -21,7 +26,7 @@ Route::get('/', function () {
 })->middleware('auth')->name('dashboard');
 
 Route::get('/faculty', function () {
-    return view('welcome'); // this is your dashboard after successful login
+    return view('client'); // this is your dashboard after successful login
 })->middleware('auth')->name('client');
 // These should be public
 
@@ -29,6 +34,9 @@ Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->na
 Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/listofaccount', [AdminController::class, 'listOfAccounts'])->name('listofaccount');
+Route::get('/certificate', [AdminController::class, 'certificate'])->name('certificate');
+Route::get('/track', [AdminController::class, 'track'])->name('track');
+Route::get('/audit', [AdminController::class, 'audit'])->name('audit');
 
 
 Route::resource('users', UserController::class);
