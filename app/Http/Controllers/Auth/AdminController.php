@@ -31,4 +31,16 @@ class AdminController extends Controller
 
         return view('auth.listofaccount', compact('users'));
     }
+    public function certificate()
+    {
+        return view('auth.certificatelist');
+    }
+    public function track()
+    {
+        return view('auth.track');
+    }
+    public function audit()
+    {
+        return view('auth.audit');
+    }
 }
