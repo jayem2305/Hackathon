@@ -53,22 +53,26 @@
             <h1 class="sitename">Alex Smith</h1>
         </a>
 
-        <div class="social-links text-center">
+        <!--<div class="social-links text-center">
             <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
             <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
             <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
             <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-        </div>
+        </div>-->
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
-                <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
-                <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
-                <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
-                <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
-                <li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i
+                <li><a href="/" class="active"><i class="bi bi-house navicon"></i>Dashboard</a></li>
+                <li>
+                    <p class="text-secondary navicon">Faculty Account Management</p>
+                </li>
+                <li><a href="/register" class="active"><i class="bi bi-person navicon"></i> Account Creation</a></li>
+                <li><a href="/register"><i class="bi bi-people-fill navicon"></i></i>List of Account</a></li>
+                <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Approval of Submision</a></li>
+                <li><a href="#portfolio"><i class="bi bi-shield-check navicon"></i> Tracking of Liscenses</a></li>
+                <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Audit logs</a></li>
+                <!--<li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i
                             class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
                         <li><a href="#">Dropdown 1</a></li>
@@ -86,8 +90,15 @@
                         <li><a href="#">Dropdown 3</a></li>
                         <li><a href="#">Dropdown 4</a></li>
                     </ul>
+                </li>-->
+                <li>
+                    <a href="#contact" class="text-danger text-decoration-none" style="transition: color 0.3s;"
+                        onmouseover="this.style.color='#ff0000'" onmouseout="this.style.color=''">
+                        <i class="bi bi-door-open navicon"></i> Logout
+                    </a>
                 </li>
-                <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+
+                </li>
             </ul>
         </nav>
 
@@ -112,64 +123,26 @@
 
         <!-- About Section -->
         <section id="about" class="about section">
+            <div class="container">
+                <h2>Create an Account</h2>
 
-            <!-- Section Title -->
-            <div class="container section-title" data-aos="fade-up">
-                <h2>About</h2>
-                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit in iste officiis commodi quidem hic quas.</p>
-            </div><!-- End Section Title -->
+                @if(session('status'))
+                    <div class="message success">{{ session('status') }}</div>
+                @endif
 
-            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                @foreach ($errors->all() as $error)
+                    <div class="message error">{{ $error }}</div>
+                @endforeach
 
-                <div class="row gy-4 justify-content-center">
-                    <div class="col-lg-4">
-                        <img src="assets/img/my-profile-img.jpg" class="img-fluid" alt="">
-                    </div>
-                    <div class="col-lg-8 content">
-                        <h2>UI/UX Designer &amp; Web Developer.</h2>
-                        <p class="fst-italic py-3">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore
-                            magna aliqua.
-                        </p>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <ul>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>1 May
-                                            1995</span></li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong>
-                                        <span>www.example.com</span></li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+123 456
-                                            7890</span></li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>New York,
-                                            USA</span></li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>30</span></li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Master</span>
-                                    </li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong>
-                                        <span>email@example.com</span></li>
-                                    <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong>
-                                        <span>Available</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <p class="py-3">
-                            Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt
-                            adipisci omnis et ut. Nulla accusantium dolor incidunt officia tempore. Et eius omnis.
-                            Cupiditate ut dicta maxime officiis quidem quia. Sed et consectetur qui quia repellendus
-                            itaque neque.
-                        </p>
-                    </div>
-                </div>
-
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+                    <input type="text" name="name" placeholder="Full Name" value="{{ old('name') }}" required>
+                    <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                    <button type="submit">Register</button>
+                </form>
             </div>
-
         </section><!-- /About Section -->
 
         <!-- Stats Section -->
