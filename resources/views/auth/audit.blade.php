@@ -69,14 +69,15 @@
                     <p class="text-secondary navicon">Faculty Account Management</p>
                 </li>
                 <li><a href="/register"><i class="bi bi-person navicon"></i> Account Creation</a></li>
-                <li><a href="/listofaccount" class="active"><i class="bi bi-people-fill navicon"></i></i>List of
+                <li><a href="/listofaccount"><i class="bi bi-people-fill navicon"></i></i>List of
                         Account</a></li>
                 <li>
                     <p class="text-secondary navicon">Verification and Approval</p>
                 </li>
-                <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Approval of Submision</a></li>
-                <li><a href="#portfolio"><i class="bi bi-shield-check navicon"></i> Tracking of Liscenses</a></li>
-                <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Audit logs</a></li>
+                <li><a href="/certificate"><i class="bi bi-file-earmark-text navicon"></i> Approval of
+                        Submision</a></li>
+                <li><a href="/track"><i class="bi bi-shield-check navicon"></i> Tracking of Liscenses</a></li>
+                <li><a href="/audit" class="active"><i class="bi bi-hdd-stack navicon"></i> Audit logs</a></li>
                 <!--<li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i
                             class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
@@ -125,103 +126,9 @@
 
         <section id="about" class=" section">
             <div class="container">
-                <h2 class="mb-4">List of Accounts</h2>
+                <h2 class="mb-4">Audit Logs</h2>
 
-                @if(session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
 
-                <table class="table table-bordered table-striped" id="myTable">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Profile</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($users as $user)
-                                            <tr>
-                                                <td>
-                                                    @if($user->profile_image)
-                                                        <img src="{{ asset($user->profile_image) }}" width="50" height="50"
-                                                            class="rounded-circle">
-                                                    @else
-                                                        N/A
-                                                    @endif
-                                                </td>
-                                                <td>{{ $user->last_name }}, {{ $user->first_name }} {{ $user->middle_name }}
-                                                    {{ $user->ext_name }}
-                                                </td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->phone_number }}</td>
-
-                                                <td>
-                                                    {!! $user->role === 'faculty_member'
-                            ? '<span class="text-primary">Faculty member</span>'
-                            : ($user->role === 'admin'
-                                ? '<span class="text-success">Admin</span>'
-                                : '<span class="text-danger">' . ucfirst($user->role) . '</span>') !!}
-                                                </td>
-
-                                                </td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                                            Actions
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" data-bs-toggle="modal"
-                                                                    data-bs-target="#viewModal-{{ $user->id }}">View</a></li>
-                                                            <li><a class="dropdown-item" data-bs-toggle="modal"
-                                                                    data-bs-target="#editModal-{{ $user->id }}">Edit</a></li>
-                                                            @if($user->role !== 'Deactivated') <!-- Check if the role is NOT Deactivated -->
-                                                                <li>
-                                                                    <form class="deactivate-user-form" data-id="{{ $user->id }}">
-                                                                        @csrf
-                                                                        @method('PATCH')
-                                                                        <button class="dropdown-item text-danger" type="submit"
-                                                                            onclick="return ;">
-                                                                            Deactivate
-                                                                        </button>
-                                                                    </form>
-                                                                </li>
-                                                            @endif
-                                                            @if($user->role !== 'admin')
-                                                                <li>
-                                                                    <form class="admin-user-form" data-id="{{ $user->id }}">
-                                                                        @csrf
-                                                                        @method('PATCH')
-                                                                        <button class="dropdown-item text-success" type="submit"
-                                                                            onclick="return;">
-                                                                            Set as Admin
-                                                                        </button>
-                                                                    </form>
-                                                                </li>
-                                                            @endif
-                                                            @if($user->role !== 'faculty_member')
-                                                                <li>
-                                                                    <form class="faculty-user-form" data-id="{{ $user->id }}">
-                                                                        @csrf
-                                                                        @method('PATCH')
-                                                                        <button class="dropdown-item text-success" type="submit"
-                                                                            onclick="return ;">
-                                                                            Set as Faculty Member
-                                                                        </button>
-                                                                    </form>
-                                                                </li>
-                                                            @endif
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
         </section>
 
@@ -254,92 +161,6 @@
     <!-- Preloader -->
     <div id="preloader"></div>
     <!-- View Modal -->
-    @foreach ($users as $user)
-        <li>
-            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#viewModal-{{ $user->id }}">View</a>
-        </li>
-        <li>
-            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editModal-{{ $user->id }}">Edit</a>
-        </li>
-
-        <!-- View Modal -->
-        <div class="modal fade" id="viewModal-{{ $user->id }}" tabindex="-1" aria-labelledby="viewModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">User Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p><strong>First Name:</strong> {{ $user->first_name }}</p>
-                        <p><strong>Middle Name:</strong> {{ $user->middle_name }}</p>
-                        <p><strong>Last Name:</strong> {{ $user->last_name }}</p>
-                        <p><strong>Extension:</strong> {{ $user->ext_name }}</p>
-                        <p><strong>Email:</strong> {{ $user->email }}</p>
-                        <p><strong>Role:</strong> {{ ucfirst($user->role) }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Optionally add Edit Modal here as well -->
-    @endforeach
-    @foreach ($users as $user)
-        <!-- Edit Modal -->
-        <div class="modal fade" id="editModal-{{ $user->id }}" tabindex="-1" aria-labelledby="editModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <form class="modal-content edit-user-form" data-id="{{ $user->id }}">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit User</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="mb-2">
-                            <label>First Name</label>
-                            <input type="text" name="first_name" value="{{ $user->first_name }}" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-2">
-                            <label>Middle Name</label>
-                            <input type="text" name="middle_name" value="{{ $user->middle_name }}" class="form-control">
-                        </div>
-                        <div class="mb-2">
-                            <label>Last Name</label>
-                            <input type="text" name="last_name" value="{{ $user->last_name }}" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-2">
-                            <label>Extension Name</label>
-                            <input type="text" name="ext_name" value="{{ $user->ext_name }}" class="form-control">
-                        </div>
-                        <div class="mb-2">
-                            <label>Email</label>
-                            <input type="email" name="email_update" value="{{ $user->email }}" class="form-control"
-                                required>
-                        </div>
-                        <div class="mb-2">
-                            <label>New Password</label>
-                            <input type="text" name="password_update" class="form-control" placeholder="Enter new password">
-                            <small class="text-muted">Leave blank if not changing password.</small>
-                        </div>
-
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    @endforeach
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
