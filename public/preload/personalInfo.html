@@ -1,0 +1,202 @@
+<div class="personal-info-container">
+  <link rel="stylesheet" href="../personalInfo.css" />
+  <div class="personal-info-form">
+    <h1 class="form-title wow fadeInUp" data-wow-delay="0s">
+      Personal Information
+    </h1>
+    <div class="form-fields-container">
+      <div class="form-fields">
+        <div class="name">
+          <input
+            class="info-input wow fadeInUp name-input"
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            data-wow-delay="0.2s"
+          />
+          <input
+            class="info-input wow fadeInUp name-input"
+            type="text"
+            name="fullName"
+            placeholder="First Name"
+            data-wow-delay="0.1s"
+          />
+
+          <input
+            class="info-input wow fadeInUp name-input"
+            type="text"
+            name="middleName"
+            placeholder="Middle Name"
+            data-wow-delay="0.3s"
+          />
+          <input
+            class="info-input wow fadeInUp Ext"
+            type="text"
+            name="extName"
+            placeholder="Ext. Name"
+            data-wow-delay="0.4s"
+          />
+        </div>
+
+        <input
+          class="info-input wow fadeInUp"
+          type="text"
+          name="profession"
+          placeholder="Profession"
+          data-wow-delay="0.5s"
+        />
+        <label for="dob" class="info-label wow fadeInUp" data-wow-delay="0.6s"
+          >Date of Birth</label
+        >
+        <input
+          class="info-input wow fadeInUp"
+          type="date"
+          name="dob"
+          placeholder="Date of Birth"
+          data-wow-delay="0.6s"
+        />
+        <input
+          class="info-input wow fadeInUp"
+          type="tel"
+          name="phone"
+          id="phone"
+          placeholder="Phone Number"
+          data-wow-delay="0.7s"
+          oninput="formatPhoneNumber(this)"
+          pattern="^\+63\d{10}$"
+          maxlength="13"
+        />
+        <script></script>
+
+        <div class="address">
+          <input
+            class="info-input wow fadeInUp"
+            type="text"
+            name="street"
+            id="street"
+            placeholder="Street Address"
+            data-wow-delay="0.5s"
+          />
+
+          <input
+            class="info-input wow fadeInUp"
+            type="text"
+            name="city"
+            id="city"
+            placeholder="City"
+            data-wow-delay="0.6s"
+          />
+
+          <input
+            class="info-input wow fadeInUp"
+            type="text"
+            name="state"
+            id="state"
+            placeholder="State/Province"
+            data-wow-delay="0.7s"
+          />
+
+          <input
+            class="info-input wow fadeInUp"
+            type="text"
+            name="zip"
+            id="zip"
+            placeholder="Zip Code"
+            data-wow-delay="0.8s"
+          />
+
+          <input
+            class="info-input wow fadeInUp"
+            type="text"
+            name="country"
+            id="country"
+            placeholder="Country"
+            data-wow-delay="0.9s"
+          />
+        </div>
+
+        <div class="form-buttons">
+          <button class="btn-submit wow fadeInUp" data-wow-delay="0.9s">
+            Submit
+          </button>
+          <button class="btn-cancel wow fadeInUp" data-wow-delay="1.0s">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div class="profile-image-section layout-input">
+        <section class="upload-container">
+          <div class="upload-wrapper">
+            <div x-data="imageData()" class="image-upload flex items-center">
+              <div class="upload-controls flex items-center">
+                <div class="upload-input-wrapper ml-5 rounded-md shadow-sm">
+                  <input
+                    @change="updatePreview($refs)"
+                    x-ref="input"
+                    type="file"
+                    accept="image/*,capture=camera"
+                    name="profileImage"
+                    id="profileImage"
+                    class="file-input"
+                  />
+                </div>
+
+                <div class="filename-display text-sm text-gray-500 mx-2">
+                  <span x-text="fileName || emptyText"></span>
+                  <button
+                    x-show="fileName"
+                    @click="clearPreview($refs)"
+                    type="button"
+                    class="remove-image-btn"
+                    aria-label="Remove image"
+                  >
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="x-circle w-4 h-4"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="image-preview h-12 w-12 rounded-full overflow-hidden bg-gray-100"
+              >
+                <div x-show="!previewPhoto">
+                  <svg
+                    class="placeholder-icon h-full w-full text-gray-300"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  x-show="previewPhoto"
+                  class="h-12 w-12 rounded-full overflow-hidden"
+                >
+                  <img
+                    :src="previewPhoto"
+                    alt=""
+                    class="preview-image h-12 w-12 object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
