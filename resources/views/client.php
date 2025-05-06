@@ -130,11 +130,11 @@
                 <h2>Create an Account</h2>
 
                 @if(session('status'))
-                    <div class="message success">{{ session('status') }}</div>
+                <div class="message success">{{ session('status') }}</div>
                 @endif
 
                 @foreach ($errors->all() as $error)
-                    <div class="message error">{{ $error }}</div>
+                <div class="message error">{{ $error }}</div>
                 @endforeach
 
                 <form method="POST" action="{{ route('register') }}">
