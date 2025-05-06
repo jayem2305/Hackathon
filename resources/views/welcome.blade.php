@@ -64,7 +64,11 @@
         <nav id="navmenu" class="navmenu">
             <ul>
                 <li><a href="/" class="active"><i class="bi bi-house navicon"></i>Dashboard</a></li>
-                <li><a href="/register"><i class="bi bi-person navicon"></i> Account Creation</a></li>
+                <li>
+                    <p class="text-secondary navicon">Faculty Account Management</p>
+                </li>
+                <li><a href="/register" class="active"><i class="bi bi-person navicon"></i> Account Creation</a></li>
+                <li><a href="/register"><i class="bi bi-people-fill navicon"></i></i>List of Account</a></li>
                 <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Approval of Submision</a></li>
                 <li><a href="#portfolio"><i class="bi bi-shield-check navicon"></i> Tracking of Liscenses</a></li>
                 <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Audit logs</a></li>

@@ -44,13 +44,11 @@
         <i class="header-toggle d-xl-none bi bi-list"></i>
 
         <div class="profile-img">
-            <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
+            <img src="profiles/{{ Auth::user()->profile_image }}" alt="Profile" class="img-fluid rounded-circle">
         </div>
 
-        <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="assets/img/logo.png" alt=""> -->
-            <h1 class="sitename">Alex Smith</h1>
+        <a href="/" class="logo d-flex align-items-center justify-content-center">
+            <h1 class="sitename">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
         </a>
 
         <!--<div class="social-links text-center">
@@ -64,7 +62,11 @@
         <nav id="navmenu" class="navmenu">
             <ul>
                 <li><a href="/"><i class="bi bi-house navicon"></i>Dashboard</a></li>
+                <li>
+                    <p class="text-secondary navicon">Faculty Account Management</p>
+                </li>
                 <li><a href="/register" class="active"><i class="bi bi-person navicon"></i> Account Creation</a></li>
+                <li><a href="/listofaccount"><i class="bi bi-people-fill navicon"></i></i>List of Account</a></li>
                 <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Approval of Submision</a></li>
                 <li><a href="#portfolio"><i class="bi bi-shield-check navicon"></i> Tracking of Liscenses</a></li>
                 <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Audit logs</a></li>
