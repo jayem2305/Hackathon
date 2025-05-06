@@ -3,7 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+*::-webkit-scrollbar {
+  width: 8px;
+  position: absolute;
+}
 body {
   display: flex;
   overflow-x: hidden;
@@ -64,7 +67,7 @@ body {
 }
 
 .accordion-body {
-  background-color: fuchsia;
+  background-color: rgb(234, 234, 234);
 }
 
 .accordion-body .list {
@@ -95,9 +98,12 @@ body {
   flex-direction: row;
   font-family: Arial, sans-serif;
 }
-
+#main {
+  overflow-y: auto;
+}
 .main {
   width: 100vw;
+  overflow: hidden;
 }
 .top {
   display: flex;
@@ -207,7 +213,4 @@ body.loaded {
   border-radius: 6px;
   margin-bottom: 20px;
   border: 1px solid rgb(223, 223, 223);
-}
-.list a {
-  user-select: all;
 }

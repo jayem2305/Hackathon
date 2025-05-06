@@ -1,0 +1,72 @@
+.educational-attainment-container {
+  padding: 20px;
+}
+
+.educational-attainment-form {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+.edu-form-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.edu-level-section {
+  margin-bottom: 30px;
+}
+
+.edu-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.edu-fields-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.edu-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.edu-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edu-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-save,
+.btn-reset {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-save {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-reset {
+  background-color: #6c757d;
+  color: #fff;
+}
