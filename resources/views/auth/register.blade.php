@@ -44,7 +44,7 @@
         <i class="header-toggle d-xl-none bi bi-list"></i>
 
         <div class="profile-img">
-            <img src="profiles/{{ Auth::user()->profile_image }}" alt="Profile" class="img-fluid rounded-circle">
+            <img src="{{ Auth::user()->profile_image }}" alt="Profile" class="img-fluid rounded-circle">
         </div>
 
         <a href="/" class="logo d-flex align-items-center justify-content-center">

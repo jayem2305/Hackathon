@@ -44,7 +44,7 @@
         <i class="header-toggle d-xl-none bi bi-list"></i>
 
         <div class="profile-img">
-            <img src="profiles/{{ Auth::user()->profile_image }}" alt="Profile" class="img-fluid rounded-circle">
+            <img src="{{ Auth::user()->profile_image }}" alt="Profile" class="img-fluid rounded-circle">
         </div>
 
         <a href="/" class="logo d-flex align-items-center justify-content-center">
@@ -95,12 +95,15 @@
                     </ul>
                 </li>-->
                 <li>
-                    <a href="#contact" class="text-danger text-decoration-none" style="transition: color 0.3s;"
-                        onmouseover="this.style.color='#ff0000'" onmouseout="this.style.color=''">
-                        <i class="bi bi-door-open navicon"></i> Logout
-                    </a>
-                </li>
-
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                        onsubmit="return confirmLogout()">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-danger text-decoration-none p-0"
+                            style="transition: color 0.3s;" onmouseover="this.style.color='#ff0000'"
+                            onmouseout="this.style.color=''">
+                            <i class="bi bi-door-open navicon"></i> Logout
+                        </button>
+                    </form>
                 </li>
             </ul>
         </nav>

@@ -99,10 +99,10 @@ class LoginController extends Controller
         session()->forget(['otp_sent', 'otp_verified', 'email']); // clear session flags
 
         // Redirect based on user role
-        if ($user->role === 'Admin') {
+        if ($user->role === 'admin') {
             return redirect()->route('dashboard');
         } else {
-            return redirect()->route('client.dashboard'); // Replace with your actual client route
+            return redirect()->route('client'); // Replace with your actual client route
         }
     }
 

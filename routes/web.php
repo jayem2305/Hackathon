@@ -40,3 +40,6 @@ Route::post('/users/{id}/admin', [UserController::class, 'admin'])->name('users.
 Route::post('/users/{id}/faculty', [UserController::class, 'faculty'])->name('users.faculty');
 
 Route::get('/users/data', [UserController::class, 'getDataForTable']);
+Route::get('/user-count', [UserController::class, 'getUserCount']);
+Route::get('/user-count-admin', [UserController::class, 'getUserCountadmin']);
+Route::get('/user-count-faculty', [UserController::class, 'getUserCountfaculty']);

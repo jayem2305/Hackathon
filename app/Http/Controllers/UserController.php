@@ -14,6 +14,22 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+    public function getUserCount()
+    {
+        $count = User::whereNot('role', 'Deactivated')->count();
+        return response()->json(['count' => $count]);
+    }
+    public function getUserCountadmin()
+    {
+        $count = User::where('role', 'admin')->count();
+        return response()->json(['count' => $count]);
+    }
+    public function getUserCountfaculty()
+    {
+        $count = User::where('role', 'faculty_member')->count();
+        return response()->json(['count' => $count]);
+    }
+
     public function show(User $user)
     {
         return view('users.show', compact('user'));
