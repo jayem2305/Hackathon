@@ -1,23 +1,14 @@
 <?php
-
-namespace Database\Seeders;
-
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-class DatabaseSeeder extends Seeder
-{
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        // User::factory(10)->create();
 
-        User::factory()->create([
+class UserSeeder extends Seeder
+{
+    public function run()
+    {
+        DB::table('users')->insert([
             'name' => 'John Doe',
             'email' => 'jenrique.a12138658@umak.edu.ph',
             'email_verified_at' => Carbon::now(),
