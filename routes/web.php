@@ -11,7 +11,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 // Handle login
 Route::post('/login', [LoginController::class, 'login'])->name('login.custom');
-
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Send OTP
 Route::post('/send-otp', [LoginController::class, 'sendOtp'])->name('send.otp');
 
@@ -20,6 +20,9 @@ Route::get('/', function () {
     return view('welcome'); // this is your dashboard after successful login
 })->middleware('auth')->name('dashboard');
 
+Route::get('/faculty', function () {
+    return view('welcome'); // this is your dashboard after successful login
+})->middleware('auth')->name('client');
 // These should be public
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');

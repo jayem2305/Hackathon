@@ -25,29 +25,36 @@ class LoginController extends Controller
     {
         $request->validate(['email' => 'required|email']);
 
+        // Fetch the user by email
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
             return back()->withErrors(['email' => 'Email not found']);
         }
 
+        // Generate the OTP
         $otp = rand(100000, 999999);
-        $user->update([
-            'otp' => $otp,
-            'otp_expires_at' => Carbon::now()->addMinutes(5),
-        ]);
 
+        // Update the OTP and expiration time in the database
+        $user->otp = $otp;
+        $user->otp_expires_at = Carbon::now()->addMinutes(5);
+        $user->save();  // Ensure the update is saved to the database
+
+        // Send the OTP via email
         Mail::raw("Your OTP is: $otp", function ($message) use ($user) {
             $message->to($user->email)->subject('Your OTP Code');
         });
 
+        // Update session variables to track OTP status
         session([
             'otp_sent' => true,
             'email' => $user->email,
+            'otp' => $otp,  // Add the OTP to the session
         ]);
 
         return back()->with('status', 'OTP sent to your email.');
     }
+
 
     public function login(Request $request)
     {
@@ -91,6 +98,21 @@ class LoginController extends Controller
         Auth::login($user);
         session()->forget(['otp_sent', 'otp_verified', 'email']); // clear session flags
 
-        return redirect()->route('dashboard');
+        // Redirect based on user role
+        if ($user->role === 'Admin') {
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('client.dashboard'); // Replace with your actual client route
+        }
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('status', 'You have been logged out successfully.');
+    }
+
 }

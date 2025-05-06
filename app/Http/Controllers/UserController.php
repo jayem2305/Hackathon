@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
+use App\Mail\FacultyRoleAssigned;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -36,7 +38,10 @@ class UserController extends Controller
 
         // Log the role after updating it
         Log::info("Updated role of user with ID $id to: " . $user->role);
-
+        Mail::raw("Your Account have been Deactivated for more infomation you may ask your departments Admin.  ", function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('Faculty Role Assignment Notification');
+        });
         if (request()->ajax()) {
             return response()->json(['success' => true, 'id' => $id]);
         }
@@ -57,13 +62,19 @@ class UserController extends Controller
 
         // Log the role after updating it
         Log::info("Updated role of user with ID $id to: " . $user->role);
-
+        Mail::raw("You have been successfully assigned the role of Admin Member. ", function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('Faculty Role Assignment Notification');
+        });
         if (request()->ajax()) {
             return response()->json(['success' => true, 'id' => $id]);
         }
 
         return redirect()->route('listofaccount')->with('success', 'User updated.');
     }
+
+
+
     public function faculty($id)
     {
         // Log the deactivation attempt
@@ -75,9 +86,13 @@ class UserController extends Controller
 
         $user->role = 'faculty_member';  // Update role
         $user->save();
-
         // Log the role after updating it
         Log::info("Updated role of user with ID $id to: " . $user->role);
+
+        Mail::raw("You have been successfully assigned the role of Faculty Member. ", function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('Faculty Role Assignment Notification');
+        });
 
         if (request()->ajax()) {
             return response()->json(['success' => true, 'id' => $id]);
@@ -87,6 +102,8 @@ class UserController extends Controller
     }
 
 
+
+
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
@@ -94,8 +111,7 @@ class UserController extends Controller
             'middle_name' => 'nullable|regex:/^[A-Za-z]+$/',
             'last_name' => 'required|regex:/^[A-Za-z]+$/',
             'ext_name' => 'nullable|regex:/^[A-Za-z]+$/',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|string',
+            'email_update' => 'required|email|unique:users,email,' . $user->id,
         ]);
 
         // Encrypt specific fields
@@ -107,12 +123,21 @@ class UserController extends Controller
         if (!empty($validated['ext_name'])) {
             $validated['ext_name'] = Crypt::encryptString($validated['ext_name']);
         }
-        $validated['email'] = Crypt::encryptString($validated['email']);
+        if ($request->filled('password_update')) {
+            $user->password = Hash::make($request->password_update);
+        }
 
-        $user->update($validated);
+        $user->update([
+            'first_name' => $validated['first_name'],
+            'middle_name' => $validated['middle_name'],
+            'last_name' => $validated['last_name'],
+            'ext_name' => $validated['ext_name'],
+            'email' => $validated['email_update'],
+        ]);
 
+        // Return updated user data as JSON response
         if ($request->ajax()) {
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'user' => $user]);
         }
 
         return redirect()->route('listofaccount')->with('success', 'User updated successfully.');

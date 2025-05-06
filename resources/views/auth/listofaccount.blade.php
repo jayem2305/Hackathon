@@ -46,7 +46,7 @@
         <i class="header-toggle d-xl-none bi bi-list"></i>
 
         <div class="profile-img">
-            <img src="profiles/{{ Auth::user()->profile_image }}" alt="Profile" class="img-fluid rounded-circle">
+            <img src="{{ Auth::user()->profile_image }}" alt="Profile" class="img-fluid rounded-circle">
         </div>
 
         <a href="/" class="logo d-flex align-items-center justify-content-center">
@@ -71,6 +71,9 @@
                 <li><a href="/register"><i class="bi bi-person navicon"></i> Account Creation</a></li>
                 <li><a href="/listofaccount" class="active"><i class="bi bi-people-fill navicon"></i></i>List of
                         Account</a></li>
+                <li>
+                    <p class="text-secondary navicon">Verification and Approval</p>
+                </li>
                 <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Approval of Submision</a></li>
                 <li><a href="#portfolio"><i class="bi bi-shield-check navicon"></i> Tracking of Liscenses</a></li>
                 <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Audit logs</a></li>
@@ -94,11 +97,23 @@
                     </ul>
                 </li>-->
                 <li>
-                    <a href="#contact" class="text-danger text-decoration-none" style="transition: color 0.3s;"
-                        onmouseover="this.style.color='#ff0000'" onmouseout="this.style.color=''">
-                        <i class="bi bi-door-open navicon"></i> Logout
-                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                        onsubmit="return confirmLogout()">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-danger text-decoration-none p-0"
+                            style="transition: color 0.3s;" onmouseover="this.style.color='#ff0000'"
+                            onmouseout="this.style.color=''">
+                            <i class="bi bi-door-open navicon"></i> Logout
+                        </button>
+                    </form>
                 </li>
+
+                <script>
+                    function confirmLogout() {
+                        return confirm("Are you sure you want to log out?");
+                    }
+                </script>
+
 
                 </li>
             </ul>
@@ -129,73 +144,81 @@
                     </thead>
                     <tbody>
                         @foreach($users as $user)
-                            <tr>
-                                <td>
-                                    @if($user->profile_image)
-                                        <img src="{{ asset($user->profile_image) }}" width="50" height="50"
-                                            class="rounded-circle">
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
-                                <td>{{ $user->last_name }}, {{ $user->first_name }} {{ $user->middle_name }}
-                                    {{ $user->ext_name }}
-                                </td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->phone_number }}</td>
-                                <td>{{ $user->role == "Faculty_member" ? ucfirst('Faculty member') : ucfirst($user->role) }}
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            Actions
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#viewModal-{{ $user->id }}">View</a></li>
-                                            <li><a class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#editModal-{{ $user->id }}">Edit</a></li>
-                                            @if($user->role !== 'Deactivated') <!-- Check if the role is NOT Deactivated -->
-                                                <li>
-                                                    <form class="deactivate-user-form" data-id="{{ $user->id }}">
-                                                        @csrf
-                                                        @method('PATCH')
-                                                        <button class="dropdown-item text-danger" type="submit"
-                                                            onclick="return ;">
-                                                            Deactivate
+                                            <tr>
+                                                <td>
+                                                    @if($user->profile_image)
+                                                        <img src="{{ asset($user->profile_image) }}" width="50" height="50"
+                                                            class="rounded-circle">
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </td>
+                                                <td>{{ $user->last_name }}, {{ $user->first_name }} {{ $user->middle_name }}
+                                                    {{ $user->ext_name }}
+                                                </td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->phone_number }}</td>
+
+                                                <td>
+                                                    {!! $user->role === 'faculty_member'
+                            ? '<span class="text-primary">Faculty member</span>'
+                            : ($user->role === 'admin'
+                                ? '<span class="text-success">Admin</span>'
+                                : '<span class="text-danger">' . ucfirst($user->role) . '</span>') !!}
+                                                </td>
+
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Actions
                                                         </button>
-                                                    </form>
-                                                </li>
-                                            @endif
-                                            @if($user->role !== 'admin')
-                                                <li>
-                                                    <form class="admin-user-form" data-id="{{ $user->id }}">
-                                                        @csrf
-                                                        @method('PATCH')
-                                                        <button class="dropdown-item text-success" type="submit"
-                                                            onclick="return;">
-                                                            Set as Admin
-                                                        </button>
-                                                    </form>
-                                                </li>
-                                            @endif
-                                            @if($user->role !== 'faculty_member')
-                                                <li>
-                                                    <form class="faculty-user-form" data-id="{{ $user->id }}">
-                                                        @csrf
-                                                        @method('PATCH')
-                                                        <button class="dropdown-item text-success" type="submit"
-                                                            onclick="return ;">
-                                                            Set as Faculty Member
-                                                        </button>
-                                                    </form>
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" data-bs-toggle="modal"
+                                                                    data-bs-target="#viewModal-{{ $user->id }}">View</a></li>
+                                                            <li><a class="dropdown-item" data-bs-toggle="modal"
+                                                                    data-bs-target="#editModal-{{ $user->id }}">Edit</a></li>
+                                                            @if($user->role !== 'Deactivated') <!-- Check if the role is NOT Deactivated -->
+                                                                <li>
+                                                                    <form class="deactivate-user-form" data-id="{{ $user->id }}">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                        <button class="dropdown-item text-danger" type="submit"
+                                                                            onclick="return ;">
+                                                                            Deactivate
+                                                                        </button>
+                                                                    </form>
+                                                                </li>
+                                                            @endif
+                                                            @if($user->role !== 'admin')
+                                                                <li>
+                                                                    <form class="admin-user-form" data-id="{{ $user->id }}">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                        <button class="dropdown-item text-success" type="submit"
+                                                                            onclick="return;">
+                                                                            Set as Admin
+                                                                        </button>
+                                                                    </form>
+                                                                </li>
+                                                            @endif
+                                                            @if($user->role !== 'faculty_member')
+                                                                <li>
+                                                                    <form class="faculty-user-form" data-id="{{ $user->id }}">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                        <button class="dropdown-item text-success" type="submit"
+                                                                            onclick="return ;">
+                                                                            Set as Faculty Member
+                                                                        </button>
+                                                                    </form>
+                                                                </li>
+                                                            @endif
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -297,16 +320,16 @@
                         </div>
                         <div class="mb-2">
                             <label>Email</label>
-                            <input type="email" name="email" value="{{ $user->email }}" class="form-control" required>
+                            <input type="email" name="email_update" value="{{ $user->email }}" class="form-control"
+                                required>
                         </div>
                         <div class="mb-2">
-                            <label>Role</label>
-                            <select name="role" class="form-control">
-                                <option value="Faculty_member" {{ $user->role == 'Faculty_member' ? 'selected' : '' }}>Faculty
-                                    Member</option>
-                                <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Admin</option>
-                            </select>
+                            <label>New Password</label>
+                            <input type="text" name="password_update" class="form-control" placeholder="Enter new password">
+                            <small class="text-muted">Leave blank if not changing password.</small>
                         </div>
+
+
                     </div>
 
                     <div class="modal-footer">
@@ -367,18 +390,30 @@
                         .then(data => {
                             if (data.success) {
                                 alert('User updated successfully.');
-                                location.reload(); // Or update the DOM dynamically if preferred
+
+                                // Dynamically update the DOM with the new user data
+                                const userRow = document.querySelector(`#user-${userId}`);
+
+                                // Update user details in the DOM (assuming these fields are in the row)
+                                userRow.querySelector('.user-name').textContent = data.user.name;
+                                userRow.querySelector('.user-email').textContent = data.user.email;
+                                userRow.querySelector('.user-role').textContent = data.user.role;
+
+                                // Or other fields based on your data structure
+                                // If you want to update other elements, repeat the above pattern
+
                             } else {
                                 alert('Update failed.');
                             }
                         })
                         .catch(err => {
                             console.error(err);
-                            alert('An error occurred.');
+                            //  alert('An error occurred.');
                         });
                 });
             });
         });
+
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

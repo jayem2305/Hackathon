@@ -102,6 +102,15 @@
                 <input type="number" name="captcha" required>
 
                 <button type="submit">Login</button>
+
+            </form>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" onsubmit="return confirmLogout()">
+                @csrf
+                <button type="submit" class="btn btn-link text-danger text-decoration-none p-0"
+                    style="transition: color 0.3s;" onmouseover="this.style.color='#ff0000'"
+                    onmouseout="this.style.color=''">
+                    <i class="bi bi-door-open navicon"></i> Logout
+                </button>
             </form>
         @else
             {{-- Form to send OTP --}}

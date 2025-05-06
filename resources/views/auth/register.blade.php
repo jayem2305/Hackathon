@@ -49,6 +49,7 @@
 
         <a href="/" class="logo d-flex align-items-center justify-content-center">
             <h1 class="sitename">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
+            <!--<p>{{ ucfirst(Auth::user()->role) }}</p>-->
         </a>
 
         <!--<div class="social-links text-center">
@@ -66,7 +67,11 @@
                     <p class="text-secondary navicon">Faculty Account Management</p>
                 </li>
                 <li><a href="/register" class="active"><i class="bi bi-person navicon"></i> Account Creation</a></li>
-                <li><a href="/listofaccount"><i class="bi bi-people-fill navicon"></i></i>List of Account</a></li>
+                <li><a href="/listofaccount"><i class="bi bi-people-fill navicon"></i></i>List of
+                        Account</a></li>
+                <li>
+                    <p class="text-secondary navicon">Verification and Approval</p>
+                </li>
                 <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Approval of Submision</a></li>
                 <li><a href="#portfolio"><i class="bi bi-shield-check navicon"></i> Tracking of Liscenses</a></li>
                 <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Audit logs</a></li>
@@ -101,7 +106,6 @@
         </nav>
 
     </header>
-
     <main class="main py-3">
 
         <section id="about" class=" section">
