@@ -1,0 +1,38 @@
+.work-experience-container {
+  padding: 2rem;
+}
+
+.work-experience-form {
+  max-width: 800px;
+  margin: auto;
+}
+
+.work-title {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.work-input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.work-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.btn-submit,
+.btn-cancel {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
