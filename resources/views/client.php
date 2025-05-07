@@ -20,8 +20,11 @@
 
         window.onload = () => {
             pages.forEach((page) => preloadContent(page));
-
             document.body.classList.add("loaded");
+            if (currentPage != "preload/dashboard.html") {
+                document.body.classList.add("loaded");
+                loadContent("preload/dashboard.html");
+            }
         };
 
         function preloadContent(page) {
@@ -80,12 +83,12 @@
 
 <body>
     <link href="lib/animate/animate.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="preload/main-css.css" />
+    <link rel="stylesheet" href="main-css.css" />
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
-    <link rel="stylesheet" href="preload/personalInfo.css" />
+    <link rel="stylesheet" href="personalInfo.css" />
     <nav class="nav-bar">
         <div class="navigation-bar">
             <div class="branding">
@@ -170,7 +173,7 @@
             </ul>
         </div>
         <div class="logout-layout p-3">
-            <button class="btn btn-danger w-100">Logout</button>
+            <a href="/login" class="btn btn-danger w-100">Logout</a>
         </div>
     </nav>
 
@@ -192,7 +195,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
-
 </body>
 
 </html>
